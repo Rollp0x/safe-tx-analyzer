@@ -46,11 +46,8 @@
             }
         },
         "trace_info": {
+            "block_number": 6980466,
             "trace_result": {
-                "block_env": {
-                    "number": 6980466,
-                    "timestamp": 1733218031
-                },
                 "asset_transfers": [
                     {
                         "token": "0xff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f",

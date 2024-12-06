@@ -236,7 +236,6 @@ export interface FormattedTransaction {
 
 // 追踪结果
 export interface TraceResult {
-  block_env:BlockEnv
   asset_transfers: TokenTransfer[];
   token_infos: Record<string, TokenInfo>;
   call_traces: CallTrace[];
@@ -246,6 +245,7 @@ export interface TraceResult {
 
   // 追踪信息
   export interface TraceInfo {
+    block_number: number;
     trace_result: TraceResult;
     execution_status: TransactionStatus;  // 执行状态,包含成功,部分成功,失败,是人为的一个总结
     error_trace_address?: number[] | null;
