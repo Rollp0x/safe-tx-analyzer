@@ -1,101 +1,176 @@
-import Image from "next/image";
+'use client'
+import '@rainbow-me/rainbowkit/styles.css';
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { 
+  Box, 
+  Paper, 
+  TextField, 
+  Button, 
+  Typography, 
+  Container,
+  IconButton,
+  InputAdornment,
+  AppBar,
+  Toolbar
+} from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { useAuth } from '@/providers/AuthContext'
+import { useSnackbar } from '@/providers/SnackbarContext'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import InputSection from '@/components/InputSection'
+import DecodedSection from '@/components/DecodedSection'
+import SimulationSection from '@/components/SimulationSection'
+import MenuIcon from '@mui/icons-material/Menu'
+
+interface LoginForm {
+  email: string
+  password: string
+}
+
+function LoginForm() {
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const { login } = useAuth()
+  const { showError, showSuccess } = useSnackbar()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginForm>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    mode: 'onChange',
+  })
+
+  const onSubmit = async (data: LoginForm) => {
+    setLoading(true)
+    try {
+      await login(data.email, data.password)
+      showSuccess('登录成功')
+    } catch (error: any) {
+      showError(error.response?.data?.message || '登录失败，请检查邮箱和密码')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <Container maxWidth="sm">
+      <Box sx={{ 
+        minHeight: '100vh', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center' 
+      }}>
+        <Paper elevation={3} sx={{ p: 4, width: '100%' }}>
+          <Typography variant="h5" component="h1" gutterBottom textAlign="center">
+            登录
+          </Typography>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <TextField
+              fullWidth
+              label="邮箱"
+              margin="normal"
+              error={Boolean(errors.email)}
+              helperText={errors.email?.message}
+              {...register('email', {
+                required: '邮箱是必填项',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: '请输入有效的电子邮件地址',
+                },
+              })}
+            />
+            
+            <TextField
+              fullWidth
+              label="密码"
+              type={showPassword ? 'text' : 'password'}
+              margin="normal"
+              error={Boolean(errors.password)}
+              helperText={errors.password?.message}
+              {...register('password', {
+                required: '密码是必填项',
+                minLength: {
+                  value: 6,
+                  message: '密码长度至少为6个字符',
+                },
+              })}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
+              }}
+            />
+
+            <Button
+              fullWidth
+              type="submit"
+              variant="contained"
+              sx={{ mt: 3 }}
+              disabled={loading}
+            >
+              {loading ? '登录中...' : '登录'}
+            </Button>
+          </form>
+        </Paper>
+      </Box>
+    </Container>
+  )
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const { token } = useAuth()
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+  // 如果没有 token，显示登录表单
+  // if (!token) {
+  //   return <LoginForm />
+  // }
+
+  // 有 token，显示主页内容
+  return (
+    <>
+      <CustomAppBar />
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <InputSection />
+        <Box sx={{ my: 4 }}>
+          <DecodedSection />
+        </Box>
+        <Box sx={{ my: 4 }}>
+          <SimulationSection />
+        </Box>
+      </Container>
+    </>
+  )
+}
+
+function CustomAppBar() {
+  return (
+    <AppBar position="static" sx={{ backgroundColor: '#1976d2' }}>
+      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="div">
+            Safe交易参数检查与结果模拟
+          </Typography>
+        </Box>
+        <ConnectButton />
+      </Toolbar>
+    </AppBar>
+  )
 }
