@@ -41,7 +41,7 @@ export function processGraphData(
     }
 
     // 处理数值
-    const token = tokenInfo[transfer.token];
+    const token = tokenInfo[transfer.token] || { symbol: "unknown", decimals: 18 };
     const value = ethers.formatUnits(transfer.value, token.decimals);
     const displayValue = Number(value).toFixed(6);
 

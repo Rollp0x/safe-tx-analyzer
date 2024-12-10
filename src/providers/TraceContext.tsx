@@ -22,11 +22,11 @@ export function TraceProvider({ children }: { children: React.ReactNode }) {
     try {
       if (request.type === 'general') {
         setCurrentChainId(request.data.chain_id);
-        const response = await mockApi.trace(request.data);
+        const response = await api.trace(request.data);
         setResult((response as unknown as AxiosResponse<TraceResponse>).data);
       } else {
         setCurrentChainId(200901);
-        const response = await mockApi.traceSafe(request.data);
+        const response = await api.traceSafe(request.data);
         setResult((response as unknown as AxiosResponse<TraceResponse>).data);
       }
     } catch (error) {
@@ -36,7 +36,7 @@ export function TraceProvider({ children }: { children: React.ReactNode }) {
   };
 
   const proposeSafeTx = async (safeAddress: string, signedSafeTx: SignedSafeTx) => {
-    const response = await mockApi.proposeSafeTx(safeAddress, signedSafeTx);
+    const response = await api.proposeSafeTx(safeAddress, signedSafeTx);
     return response.data;
   };
 

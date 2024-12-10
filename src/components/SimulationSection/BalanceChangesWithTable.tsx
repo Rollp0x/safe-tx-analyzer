@@ -14,8 +14,7 @@ function BalanceChangeWithTable({ traceResult }: { traceResult: TraceInfo}) {
       address,
       tokens: Object.entries(tokens)
         .map(([token, { value, isPositive }]) => {
-          const tokenData = tokenInfos?.[token];
-          if (!tokenData) return null; // 如果tokenData为null，则跳过
+          const tokenData = tokenInfos?.[token] || { symbol: "unknown", decimals: 18 };
           const formattedValue = ethers.formatUnits(value, tokenData.decimals);
           const displayValue = Number(formattedValue);
 
@@ -26,7 +25,7 @@ function BalanceChangeWithTable({ traceResult }: { traceResult: TraceInfo}) {
 
           return {
             symbol: tokenData.symbol,
-            value: displayValue.toFixed(6),
+            value: displayValue.toFixed(tokenData.decimals),
             isPositive
           };
         })

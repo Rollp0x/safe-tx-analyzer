@@ -79,13 +79,6 @@ export interface Log {
   data: string;        // Bytes -> string
 }
 
-// 交易状态
-export type TransactionStatus = 
-  | "Success"
-  | "PartialSuccess"
-  | { Failed: { error: string; origin_error?: string | null } };
-
-
 
 
 // 基础类型
