@@ -11,7 +11,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('safe_tx_analyzer_token')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -22,9 +22,7 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   response => response.data,
-  error => {
-    throw new Error(error.response?.data?.message || error.message || 'Request failed');
-  }
+  error =>  Promise.reject(error)
 );
 
 export default instance; 

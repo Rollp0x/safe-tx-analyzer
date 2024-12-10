@@ -13,16 +13,13 @@ interface PublicKeyResponse {
 }
 
 export const api = {
-  // 获取公钥
-  getPublicKey: () => 
-    instance.get<PublicKeyResponse>('/auth/public-key'),
   // 登录
   login: (request: LoginRequest) =>
-    instance.post<LoginResponse>('/user/login', request),
+    instance.post<LoginResponse>('/login', request),
 
   // Safe交易追踪
   traceSafe: (request: SafeTraceRequest) =>
-    instance.post<TraceResponse>('/trace/safe', request),
+    instance.post<TraceResponse>('/auth/trace/safe', request),
   
   // Safe 交易提交
   proposeSafeTx: (safeAddress: string, signedTx: SignedSafeTx) => 

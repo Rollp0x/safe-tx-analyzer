@@ -18,13 +18,13 @@ import {
   Close as CloseIcon
 } from '@mui/icons-material';
 import { useSnackbar } from '../../providers/SnackbarContext';
-import { TraceResult, CallTrace } from '../../types';
+import { TraceInfo, CallTrace } from '../../types';
 
 interface CallHierarchyProps {
   open: boolean;
   onClose: () => void;
   error_trace_address?: number[] | null;
-  traceResult: TraceResult | null;
+  traceResult: TraceInfo | null;
 }
 
 interface TraceItemProps {

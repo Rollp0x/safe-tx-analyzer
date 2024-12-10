@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import CreateIcon from '@mui/icons-material/Create';
-import { SignedSafeTx, TraceResponse, TraceResult, TransactionStatus } from '../../types';
+import { SignedSafeTx, TraceResponse, TraceInfo, TransactionStatus, ExecutionStatus } from '../../types';
 import { useWallet } from '../../providers/WalletContext';
 import { useSnackbar } from '../../providers/SnackbarContext';
 import { useAccount } from 'wagmi';
@@ -10,7 +10,7 @@ import { api } from '../../services/api';import CallHierarchy from './CallHierar
 
 interface BasicInfoProps {
   result: TraceResponse | null;
-  traceResult: TraceResult | null;
+  traceResult: TraceInfo | null;
 }
 
 function BasicInfo({ result, traceResult }: BasicInfoProps) {
@@ -115,20 +115,11 @@ function BasicInfo({ result, traceResult }: BasicInfoProps) {
         ) : (
           <>
             <Typography 
-              color={getStatusColor(result.trace_info.execution_status)} 
+              color={getStatusColor(result.trace_info.status)} 
               sx={{ mr: 1 }}
             >
-              {getExecutionStatusText(result.trace_info.execution_status)}
+              {getExecutionStatusText(result.trace_info.status,result.trace_info.error_message)}
             </Typography>
-
-            {(typeof result.trace_info.execution_status === 'object' && 'Failed' in result.trace_info.execution_status) && (
-              <Typography color="error.main">
-                {/* ({formatErrorMessage(result.trace_info.execution_status.Failed.error)} */}
-                {result.trace_info.execution_status.Failed.origin_error && 
-                  `初始错误: ${formatErrorMessage(result.trace_info.execution_status.Failed.origin_error)}`
-                })
-              </Typography>
-            )}
           </>
         )}
       </Box>
@@ -171,24 +162,17 @@ function BasicInfo({ result, traceResult }: BasicInfoProps) {
 export default BasicInfo;
 
 // 获取状态颜色
-const getStatusColor = (status: TransactionStatus) => {
-  if (status === "Success") return 'success.main';
-  if (status === "PartialSuccess") return 'warning.main';
-  if ("Failed" in status) return 'error.main';
-  return 'text.primary';
+const getStatusColor = (status: ExecutionStatus) => {
+  return ("Success" in status) ? 'success.main' : 'error.main';
 };
 
 // 获取状态文本
-const getExecutionStatusText = (status: TransactionStatus) => {
-  if (status === "Success") return "模拟交易成功.";
-  if (status === "PartialSuccess") return "模拟交易部分成功.";
-  if ("Failed" in status) {
-    return "模拟交易失败,";
-    // return `模拟交易失败: ${status.Failed.error}${
-    //   status.Failed.origin_error ? `\n原始错误: ${status.Failed.origin_error}` : ''
-    // }`;
+const getExecutionStatusText = (status: ExecutionStatus,error_message: string| undefined | null) => {
+  let prefix = ("Success" in status) ? "模拟交易执行成功." : "模拟交易执行失败.";
+  if (error_message) {
+    prefix += ` 初始错误信息: ${formatErrorMessage(error_message)}`;
   }
-  return "未知状态.";
+  return prefix;
 };
 
 // 格式化错误信息

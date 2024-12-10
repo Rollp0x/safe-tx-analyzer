@@ -24,7 +24,7 @@ import SimulationSection from '@/components/SimulationSection'
 import MenuIcon from '@mui/icons-material/Menu'
 
 interface LoginForm {
-  email: string
+  username: string
   password: string
 }
 
@@ -40,7 +40,7 @@ function LoginForm() {
     formState: { errors },
   } = useForm<LoginForm>({
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
     mode: 'onChange',
@@ -49,10 +49,12 @@ function LoginForm() {
   const onSubmit = async (data: LoginForm) => {
     setLoading(true)
     try {
-      await login(data.email, data.password)
+      await login(data.username, data.password)
       showSuccess('登录成功')
     } catch (error: any) {
-      showError(error.response?.data?.message || '登录失败，请检查邮箱和密码')
+
+      showError(error.response?.data?.message || '登录失败,请检查用户名和密码')
+      
     } finally {
       setLoading(false)
     }
@@ -71,20 +73,28 @@ function LoginForm() {
             登录
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField
-              fullWidth
-              label="邮箱"
-              margin="normal"
-              error={Boolean(errors.email)}
-              helperText={errors.email?.message}
-              {...register('email', {
-                required: '邮箱是必填项',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: '请输入有效的电子邮件地址',
-                },
-              })}
-            />
+          <TextField
+            fullWidth
+            label="用户名"
+            margin="normal"
+            error={Boolean(errors.username)}
+            helperText={errors.username?.message}
+            {...register('username', {
+              required: '用户名是必填项',
+              minLength: {
+                value: 3,
+                message: '用户名至少需要3个字符'
+              },
+              maxLength: {
+                value: 20,
+                message: '用户名不能超过20个字符'
+              },
+              pattern: {
+                value: /^[a-zA-Z0-9_-]+$/,
+                message: '用户名只能包含字母、数字、下划线和横线'
+              }
+            })}
+          />
             
             <TextField
               fullWidth
@@ -136,9 +146,9 @@ export default function Home() {
   const { token } = useAuth()
 
   // 如果没有 token，显示登录表单
-  // if (!token) {
-  //   return <LoginForm />
-  // }
+  if (!token) {
+    return <LoginForm />
+  }
 
   // 有 token，显示主页内容
   return (

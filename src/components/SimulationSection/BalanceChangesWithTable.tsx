@@ -2,9 +2,9 @@ import { Box, Typography } from '@mui/material';
 import { calculateBalanceChanges } from '../../utils/balance';
 import { ethers } from 'ethers';
 import { BalanceTable } from './BalanceTable';
-import { TraceResult } from '../../types';
+import { TraceInfo } from '../../types';
 
-function BalanceChangeWithTable({ traceResult }: { traceResult: TraceResult}) {
+function BalanceChangeWithTable({ traceResult }: { traceResult: TraceInfo}) {
   // 转换数据格式以适配 BalanceTable
   const formatBalanceData = () => {
     const balances = calculateBalanceChanges(traceResult.asset_transfers);
@@ -14,7 +14,7 @@ function BalanceChangeWithTable({ traceResult }: { traceResult: TraceResult}) {
       address,
       tokens: Object.entries(tokens)
         .map(([token, { value, isPositive }]) => {
-          const tokenData = tokenInfo[token];
+          const tokenData = tokenInfo?.[token] || { symbol: "unknown", decimals: 18 };
           const formattedValue = ethers.formatUnits(value, tokenData.decimals);
           const displayValue = Number(formattedValue);
 
@@ -24,8 +24,8 @@ function BalanceChangeWithTable({ traceResult }: { traceResult: TraceResult}) {
           }
 
           return {
-            symbol: tokenData.symbol,
-            value: displayValue.toFixed(6),
+            symbol: tokenData.symbol ,
+            value: displayValue.toFixed(tokenData.decimals),
             isPositive
           };
         })

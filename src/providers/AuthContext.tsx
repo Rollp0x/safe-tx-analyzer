@@ -1,12 +1,12 @@
 'use client'
 
-import { createContext, useContext, useState, ReactNode } from 'react'
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 import { api } from '@/services/api'
-import JSEncrypt from 'jsencrypt'
 
 interface AuthContextType {
   token: string | null
   login: (username: string, password: string) => Promise<void>
+  logout: () => void
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -14,50 +14,44 @@ const AuthContext = createContext<AuthContextType | null>(null)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(() => {
     if (typeof window !== 'undefined') {
-      const storedToken = localStorage.getItem('token')
-      const expiresAt = localStorage.getItem('token_expires_at')
-      
-      if (storedToken && expiresAt) {
-        // 检查是否过期
-        if (Date.now() < parseInt(expiresAt) * 1000) {
-          return storedToken
-        } else {
-          // 已过期，清除存储
-          localStorage.removeItem('token')
-          localStorage.removeItem('token_expires_at')
-        }
-      }
+      return localStorage.getItem('safe_tx_analyzer_token')
     }
     return null
   })
 
+  const logout = () => {
+    setToken(null)
+    localStorage.removeItem('safe_tx_analyzer_token')
+  }
+
   const login = async (username: string, password: string) => {
     try {
-      // 1. 获取公钥
-      const { data: { public_key } } = await api.getPublicKey()
-      
-      // 2. 加密密码
-      const encrypt = new JSEncrypt()
-      encrypt.setPublicKey(public_key)
-      const encryptedPassword = encrypt.encrypt(password)
-
-      // 3. 登录
-      const { data: { token, expires_at } } = await api.login({
+      const { data: { token } } = await api.login({
         username,
-        password: encryptedPassword as string,
+        password,
       })
       
-      // 4. 保存 token 和过期时间
       setToken(token)
-      localStorage.setItem('token', token)
-      localStorage.setItem('token_expires_at', expires_at.toString())
+      localStorage.setItem('safe_tx_analyzer_token', token)
     } catch (error) {
       throw error
     }
   }
 
+  // 添加事件监听
+  useEffect(() => {
+    const handleLogout = () => {
+      logout()
+    }
+
+    window.addEventListener('auth:logout', handleLogout)
+    return () => {
+      window.removeEventListener('auth:logout', handleLogout)
+    }
+  }, [])
+
   return (
-    <AuthContext.Provider value={{ token, login }}>
+    <AuthContext.Provider value={{ token, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

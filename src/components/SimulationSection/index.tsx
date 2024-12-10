@@ -7,7 +7,7 @@ import FlowGraph from './FlowGraph';
 import { useTrace } from '@/providers/TraceContext';
 import { processTokenTransfers } from '@/utils/token';
 import LogsTable from './LogsTable'  // 新增
-import { TokenTransfer, TokenInfo, TraceResult } from '@/types';
+import { TokenTransfer, TokenInfo, TraceInfo } from '@/types';
 import chain_infos from '@/config/chain_infos.json'
 
 function SimulationSection() {
@@ -20,9 +20,9 @@ function SimulationSection() {
   }
 
   // 直接处理数据
-  let processedTraceResult: TraceResult;
+  let processedTraceResult: TraceInfo;
   try {
-    const processedTokenInfo = Object.entries(result?.trace_info?.trace_result?.token_infos ?? {}).reduce(
+    const processedTokenInfo = Object.entries(result?.trace_info?.token_infos ?? {}).reduce(
       (acc, [address, info]) => ({
         ...acc,
         [address.toLowerCase()]: info
@@ -30,7 +30,7 @@ function SimulationSection() {
       {} as Record<string, TokenInfo>
     );
     
-    const processedTransfers = processTokenTransfers(result.trace_info.trace_result, chainInfo)
+    const processedTransfers = processTokenTransfers(result.trace_info, chainInfo)
       .asset_transfers.map((transfer: TokenTransfer) => ({
         ...transfer,
         token: transfer.token.toLowerCase(),
@@ -39,7 +39,7 @@ function SimulationSection() {
       }));
 
     processedTraceResult = {
-      ...result?.trace_info?.trace_result,
+      ...result?.trace_info,
       token_infos: processedTokenInfo,
       asset_transfers: processedTransfers,
     };
@@ -73,7 +73,7 @@ function SimulationSection() {
         {/* 新增日志列表 */}
         <Paper elevation={2}>
           <Box sx={{ p: 3 }}>
-            <LogsTable logs={result.trace_info.trace_result.logs || []} />
+            <LogsTable logs={result.trace_info.logs || []} />
           </Box>
         </Paper>
       </Stack>

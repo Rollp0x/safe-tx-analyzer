@@ -24,14 +24,23 @@ function SafeTraceTab() {
     setLoading(true);
     try {
       await trace({
-        type: 'safe',
         data: {
           tx_url: txUrl.trim()
         }
       });
       showSuccess("交易解析成功");
-    } catch (error) {
-      showError(error instanceof Error ? error.message : '交易解析请求失败');
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        localStorage.removeItem('safe_tx_analyzer_token')
+        window.dispatchEvent(new Event('auth:logout'))
+        showError('Token已过期,请重新登录')
+      } else {
+        if(error.response?.message){
+          showError(error.response?.message)
+        } else {
+          showError('请求失败')
+        }
+      }
     } finally {
       setLoading(false);
     }

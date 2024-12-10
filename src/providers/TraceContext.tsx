@@ -19,7 +19,7 @@ export function TraceProvider({ children }: { children: React.ReactNode }) {
 
   const trace = async (request: TraceRequestType) => {
     try {
-       const response = await mockApi.traceSafe(request.data);
+       const response = await api.traceSafe(request.data);
        setResult((response as unknown as AxiosResponse<TraceResponse>).data);
     } catch (error) {
       setResult(null);

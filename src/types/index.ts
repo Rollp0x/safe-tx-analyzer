@@ -164,7 +164,7 @@ export type ExecutionStatus =
     }
   | {
       Failed: {
-        kind: FailureKind;
+        types: string;
         gas_used: number;
         output?: string | null;
       }
@@ -234,22 +234,18 @@ export interface FormattedTransaction {
   function_call?: FunctionCall | null;
 }
 
-// 追踪结果
-export interface TraceResult {
+
+// 追踪信息
+export interface TraceInfo {
+  block_number: number;
+  token_infos?: Record<string, TokenInfo>;
   asset_transfers: TokenTransfer[];
-  token_infos: Record<string, TokenInfo>;
   call_traces: CallTrace[];
   logs: Log[];
   status: ExecutionStatus;
+  error_trace_address?: number[] | null;
+  error_message?: string | null;
 }
-
-  // 追踪信息
-  export interface TraceInfo {
-    block_number: number;
-    trace_result: TraceResult;
-    execution_status: TransactionStatus;  // 执行状态,包含成功,部分成功,失败,是人为的一个总结
-    error_trace_address?: number[] | null;
-  }
   
 // 统一的追踪响应类型
 export interface TraceResponse {
@@ -297,5 +293,4 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   token: string
-  expires_at: number  // Unix timestamp in seconds
 }

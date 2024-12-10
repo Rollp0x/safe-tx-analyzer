@@ -4,9 +4,9 @@ import { Box, Typography, IconButton, Dialog, DialogContent } from '@mui/materia
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import { processGraphData } from '../../utils/graph';
 import { useSnackbar } from '../../providers/SnackbarContext';
-import { TraceResult } from '../../types';
+import { TraceInfo } from '../../types';
 
-function FlowGraph({ traceResult }: { traceResult: TraceResult}) {
+function FlowGraph({ traceResult }: { traceResult: TraceInfo}) {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const fullscreenContainerRef = useRef<HTMLDivElement>(null);
@@ -111,7 +111,7 @@ function FlowGraph({ traceResult }: { traceResult: TraceResult}) {
 
             const data = processGraphData(
                 traceResult.asset_transfers,
-                traceResult.token_infos
+                traceResult.token_infos || {}
             );
 
             graph.setData(data);
