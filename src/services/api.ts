@@ -1,16 +1,6 @@
 import instance from './axios'; // 我们配置的 axios 实例
 import { SafeTraceRequest,TraceResponse,LoginRequest, LoginResponse, SignedSafeTx } from '../types';
-
-const safe_url = process.env.NEXT_PUBLIC_BITLAYER_SAFE_URL
-
-if (!safe_url) {
-  throw new Error('NEXT_PUBLIC_BITLAYER_SAFE_URL is not defined')
-}
-
-
-interface PublicKeyResponse {
-  public_key: string
-}
+import axios from 'axios'
 
 export const api = {
   // 登录
@@ -23,7 +13,7 @@ export const api = {
   
   // Safe 交易提交
   proposeSafeTx: (safeAddress: string, signedTx: SignedSafeTx) => 
-    instance.post<void>(`${safe_url}/${safeAddress}/propose`, signedTx),
+    axios.post<void>('/api/safe/propose', { safeAddress, signedTx }),
 
 };
   

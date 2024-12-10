@@ -60,10 +60,17 @@ function BasicInfo({ result, traceResult }: BasicInfoProps) {
         signer: address,
         signature: signature
       }]).sort((a, b) => a.signer.localeCompare(b.signer));
-      let signatures = new_signatures.map(s => s.signature).join(',');
+      let signatures = new_signatures.map((s, index) => {
+        return index === 0 ? s.signature : s.signature.replace(/^0x/, '');
+      }).join('');
       // 我们需要构造一个 SignedSafeTx 对象
       const signedSafeTx: SignedSafeTx = {
         ...result.safe_info.safe_tx,
+        value: parseInt(result.safe_info.safe_tx.value, 16).toString(),
+        safeTxGas: parseInt(result.safe_info.safe_tx.safeTxGas, 16).toString(),
+        baseGas: parseInt(result.safe_info.safe_tx.baseGas, 16).toString(),
+        gasPrice: parseInt(result.safe_info.safe_tx.gasPrice, 16).toString(),
+        nonce: parseInt(result.safe_info.safe_tx.nonce, 16).toString(),
         safe: result.safe_info.safe_address,
         signature: signatures,
         sender: address,
@@ -91,7 +98,7 @@ function BasicInfo({ result, traceResult }: BasicInfoProps) {
       }
     }
   };
-  const status_flag = result?.safe_info?.status?.toUpperCase() === 'PENDING' || result?.safe_info?.status?.toUpperCase() === 'CANCELED';
+  const status_flag = result?.safe_info?.status?.toUpperCase() === 'AWAITING_CONFIRMATIONS' || result?.safe_info?.status?.toUpperCase() === 'CANCELED';
   const threshold_flag = (result?.safe_info?.confirmations?.length ?? 0) < (result?.safe_info?.confirmations_required ?? 0);
   const vailid =  threshold_flag && status_flag; //todo 这里是测试用，真实情况是pending中。
   
