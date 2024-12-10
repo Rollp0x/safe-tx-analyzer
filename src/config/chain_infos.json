@@ -11,56 +11,6 @@
         "wrap_token_symbol": "WETH"
       },
       {
-        "name": "Goerli",
-        "chain_id": 5,
-        "symbol": "ETH",
-        "decimals": 18,
-        "rpc_url": "https://rpc.ankr.com/eth_goerli",
-        "multi_send_call_only": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
-        "wrap_token": "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
-        "wrap_token_symbol": "WETH"
-      },
-      {
-        "name": "BSC",
-        "chain_id": 56,
-        "symbol": "BNB",
-        "decimals": 18,
-        "rpc_url": "https://rpc.ankr.com/bsc",
-        "multi_send_call_only": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
-        "wrap_token": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-        "wrap_token_symbol": "WBNB"
-      },
-      {
-        "name": "Polygon",
-        "chain_id": 137,
-        "symbol": "MATIC",
-        "decimals": 18,
-        "rpc_url": "https://rpc.ankr.com/polygon",
-        "multi_send_call_only": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
-        "wrap_token": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
-        "wrap_token_symbol": "WMATIC"
-      },
-      {
-        "name": "Arbitrum",
-        "chain_id": 42161,
-        "symbol": "ARB",
-        "decimals": 18,
-        "rpc_url": "https://rpc.ankr.com/arbitrum",
-        "multi_send_call_only": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
-        "wrap_token": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-        "wrap_token_symbol": "WETH"
-      },
-      {
-        "name": "Optimism",
-        "chain_id": 10,
-        "symbol": "OP",
-        "decimals": 18,
-        "rpc_url": "https://rpc.ankr.com/optimism",
-        "multi_send_call_only": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
-        "wrap_token": "0x4200000000000000000000000000000000000006",
-        "wrap_token_symbol": "WETH"
-      },
-      {
         "name": "BitLayer",
         "chain_id": 200901,
         "symbol": "BTC",
@@ -68,6 +18,16 @@
         "rpc_url": "https://rpc.bitlayer.org",
         "multi_send_call_only": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
         "wrap_token": "0xff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f",
+        "wrap_token_symbol": "WBTC"
+      },
+      {
+        "name": "BitLayerTestnet",
+        "chain_id": 200810,
+        "symbol": "BTC",
+        "decimals": 18,
+        "rpc_url": "https://testnet-rpc.bitlayer.org",
+        "multi_send_call_only": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
+        "wrap_token": "0x3e57d6946f893314324c975aa9cebbdf3232967e",
         "wrap_token_symbol": "WBTC"
       }
     ]

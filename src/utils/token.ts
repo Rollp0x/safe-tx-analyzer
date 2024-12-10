@@ -1,6 +1,6 @@
-import { TokenTransfer, ChainInfo, TraceResult } from '../types';
+import { TokenTransfer, ChainInfo, TraceInfo } from '@/types';
 
-export function processTokenTransfers(traceResult: TraceResult, chainInfo: ChainInfo): TraceResult {
+export function processTokenTransfers(traceResult: TraceInfo, chainInfo: ChainInfo): TraceInfo {
     // 过滤掉 value 为 0 的转账记录
     const processedTransfers = [...traceResult.asset_transfers].filter(transfer => transfer.value !== '0x0');
     const tokenInfos = { ...traceResult.token_infos };
