@@ -69,6 +69,16 @@
         "multi_send_call_only": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
         "wrap_token": "0xff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f",
         "wrap_token_symbol": "WBTC"
+      },
+      {
+        "name": "BitLayerTestnet",
+        "chain_id": 200810,
+        "symbol": "BTC",
+        "decimals": 18,
+        "rpc_url": "https://testnet-rpc.bitlayer.org",
+        "multi_send_call_only": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
+        "wrap_token": "0x3e57d6946f893314324c975aa9cebbdf3232967e",
+        "wrap_token_symbol": "WBTC"
       }
     ]
   }

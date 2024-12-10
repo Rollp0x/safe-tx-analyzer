@@ -8,7 +8,6 @@ import { ThemeProvider, createTheme } from '@mui/material'
 import { SnackbarProvider } from './SnackbarContext'
 import { TraceProvider } from './TraceContext'
 import { WalletProvider } from './WalletContext'
-import { AuthProvider } from './AuthContext'
 
 const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID
 
@@ -23,7 +22,6 @@ const theme = createTheme()
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <AuthProvider>
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider>
@@ -39,6 +37,5 @@ export function Providers({ children }: { children: React.ReactNode }) {
           </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
-    </AuthProvider>
   )
 } 

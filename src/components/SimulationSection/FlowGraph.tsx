@@ -2,11 +2,11 @@ import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { Graph, NodeEvent, IElementEvent } from '@antv/g6';
 import { Box, Typography, IconButton, Dialog, DialogContent } from '@mui/material';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
-import { processGraphData } from '../../utils/graph';
-import { useSnackbar } from '../../providers/SnackbarContext';
-import { TraceResult } from '../../types';
+import { processGraphData } from '@/utils/graph';
+import { useSnackbar } from '@/providers/SnackbarContext';
+import { TokenInfo, TraceInfo } from '@/types';
 
-function FlowGraph({ traceResult }: { traceResult: TraceResult}) {
+function FlowGraph({ traceResult }: { traceResult: TraceInfo}) {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const fullscreenContainerRef = useRef<HTMLDivElement>(null);
@@ -102,7 +102,7 @@ function FlowGraph({ traceResult }: { traceResult: TraceResult}) {
     // 修改 renderGraphData 函数
     const renderGraphData = useCallback((graph: Graph) => {
 
-        if (!traceResult || !graph) return;
+        if (!traceResult || !graph || !traceResult.token_infos) return;
 
         setTimeout(() => {
             if (graph.destroyed) {
@@ -111,7 +111,7 @@ function FlowGraph({ traceResult }: { traceResult: TraceResult}) {
 
             const data = processGraphData(
                 traceResult.asset_transfers,
-                traceResult.token_infos
+                traceResult.token_infos as Record<string, TokenInfo>
             );
 
             graph.setData(data);

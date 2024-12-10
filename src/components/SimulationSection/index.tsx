@@ -6,23 +6,21 @@ import BalanceChangesWithTable from './BalanceChangesWithTable';
 import FlowGraph from './FlowGraph';
 import { useTrace } from '@/providers/TraceContext';
 import { processTokenTransfers } from '@/utils/token';
-import LogsTable from './LogsTable'  // 新增
-import { TokenTransfer, TokenInfo, TraceResult } from '@/types';
-import chain_infos from '@/config/chain_infos.json'
+import { TokenTransfer, TokenInfo, TraceInfo, ChainInfo } from '@/types';
 
-function SimulationSection() {
+function SimulationSection({ chains }: { chains: ChainInfo[] }) {
   
-  const { result } = useTrace();
+  const { result, currentChainId } = useTrace();
 
-  const chainInfo = chain_infos.chains.find(chain => chain.chain_id === 200901);
+  const chainInfo = chains.find(chain => chain.chain_id === currentChainId);
   if (!result?.trace_info || !chainInfo) {
     return null;
   }
 
   // 直接处理数据
-  let processedTraceResult: TraceResult;
+  let processedTraceResult: TraceInfo;
   try {
-    const processedTokenInfo = Object.entries(result?.trace_info?.trace_result?.token_infos ?? {}).reduce(
+    const processedTokenInfo = Object.entries(result?.trace_info?.token_infos ?? {}).reduce(
       (acc, [address, info]) => ({
         ...acc,
         [address.toLowerCase()]: info
@@ -30,7 +28,7 @@ function SimulationSection() {
       {} as Record<string, TokenInfo>
     );
     
-    const processedTransfers = processTokenTransfers(result.trace_info.trace_result, chainInfo)
+    const processedTransfers = processTokenTransfers(result.trace_info, chainInfo)
       .asset_transfers.map((transfer: TokenTransfer) => ({
         ...transfer,
         token: transfer.token.toLowerCase(),
@@ -39,7 +37,7 @@ function SimulationSection() {
       }));
 
     processedTraceResult = {
-      ...result?.trace_info?.trace_result,
+      ...result?.trace_info,
       token_infos: processedTokenInfo,
       asset_transfers: processedTransfers,
     };
@@ -67,13 +65,6 @@ function SimulationSection() {
         <Paper elevation={2}>
           <Box sx={{ p: 3 }}>
             <BalanceChangesWithTable traceResult={processedTraceResult} />
-          </Box>
-        </Paper>
-
-        {/* 新增日志列表 */}
-        <Paper elevation={2}>
-          <Box sx={{ p: 3 }}>
-            <LogsTable logs={result.trace_info.trace_result.logs || []} />
           </Box>
         </Paper>
       </Stack>

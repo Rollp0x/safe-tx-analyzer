@@ -2,21 +2,24 @@ import { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import CreateIcon from '@mui/icons-material/Create';
-import { SignedSafeTx, TraceResponse, TraceResult, TransactionStatus } from '../../types';
-import { useWallet } from '../../providers/WalletContext';
-import { useSnackbar } from '../../providers/SnackbarContext';
+import { SignedSafeTx, TraceResponse, TraceInfo, TransactionStatus, ExecutionStatus } from '@/types';
+import { useWallet } from '@/providers/WalletContext';
+import { useSnackbar } from '@/providers/SnackbarContext';
 import { useAccount } from 'wagmi';
-import { api } from '../../services/api';import CallHierarchy from './CallHierarchy';
+import { api } from '@/services/api';
+import { useTrace } from '@/providers/TraceContext';
+import CallHierarchy from './CallHierarchy';
 
 interface BasicInfoProps {
   result: TraceResponse | null;
-  traceResult: TraceResult | null;
+  traceResult: TraceInfo | null;
 }
 
 function BasicInfo({ result, traceResult }: BasicInfoProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { showSuccess, showError } = useSnackbar();
   const { requestSignature } = useWallet();
+  const { proposeSafeTx } = useTrace();
   // 获取当前连接的钱包地址
   const { address, isConnected } = useAccount();
 
@@ -70,7 +73,7 @@ function BasicInfo({ result, traceResult }: BasicInfoProps) {
         safeTxHash: result.safe_info.tx_id
       };
       try {
-        await api.proposeSafeTx(result.safe_info.safe_address, signedSafeTx);
+        await proposeSafeTx(result.safe_info.safe_address, signedSafeTx);
         showSuccess('交易签名并提交成功');
       }catch (err) {
         showError('交易签名提交失败:' + err);
@@ -115,18 +118,18 @@ function BasicInfo({ result, traceResult }: BasicInfoProps) {
         ) : (
           <>
             <Typography 
-              color={getStatusColor(result.trace_info.execution_status)} 
+              color={getStatusColor(result.trace_info.status)} 
               sx={{ mr: 1 }}
             >
-              {getExecutionStatusText(result.trace_info.execution_status)}
+              {getExecutionStatusText(result.trace_info.status)}
             </Typography>
 
-            {(typeof result.trace_info.execution_status === 'object' && 'Failed' in result.trace_info.execution_status) && (
+            {(typeof result.trace_info.status === 'object' && 'Failed' in result.trace_info.status) && (
               <Typography color="error.main">
                 {/* ({formatErrorMessage(result.trace_info.execution_status.Failed.error)} */}
-                {result.trace_info.execution_status.Failed.origin_error && 
-                  `初始错误: ${formatErrorMessage(result.trace_info.execution_status.Failed.origin_error)}`
-                })
+                {result.trace_info.error_message && 
+                  `初始错误: ${result.trace_info.error_message.substring(0,20)}`
+                }
               </Typography>
             )}
           </>
@@ -171,19 +174,17 @@ function BasicInfo({ result, traceResult }: BasicInfoProps) {
 export default BasicInfo;
 
 // 获取状态颜色
-const getStatusColor = (status: TransactionStatus) => {
-  if (status === "Success") return 'success.main';
-  if (status === "PartialSuccess") return 'warning.main';
+const getStatusColor = (status: ExecutionStatus) => {
+  if ("Success" in status) return 'success.main';
   if ("Failed" in status) return 'error.main';
   return 'text.primary';
 };
 
 // 获取状态文本
-const getExecutionStatusText = (status: TransactionStatus) => {
-  if (status === "Success") return "模拟交易成功.";
-  if (status === "PartialSuccess") return "模拟交易部分成功.";
+const getExecutionStatusText = (status: ExecutionStatus) => {
+  if ("Success" in status) return "模拟交易执行成功.";
   if ("Failed" in status) {
-    return "模拟交易失败,";
+    return "模拟交易执行失败";
     // return `模拟交易失败: ${status.Failed.error}${
     //   status.Failed.origin_error ? `\n原始错误: ${status.Failed.origin_error}` : ''
     // }`;

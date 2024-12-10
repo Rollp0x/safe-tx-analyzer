@@ -1,7 +1,7 @@
 import { Paper, Box, Typography } from '@mui/material';
-import { useTrace } from '../../providers/TraceContext';
-import CodeBlock from '../common/CodeBlock';
-import { SafeInfo, FormattedTransaction } from '../../types';
+import { useTrace } from '@/providers/TraceContext';
+import CodeBlock from '@/components/common/CodeBlock';
+import { SafeInfo, FormattedTransaction } from '@/types';
 
 function DecodedSection() {
   const { result } = useTrace();

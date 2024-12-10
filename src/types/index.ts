@@ -138,9 +138,9 @@ export interface CallTrace {
 }
 
 // 请求类型
-export interface TraceRequestType {
-  data: SafeTraceRequest 
-};
+export type TraceRequestType = 
+  | { type: 'general'; data: TraceRequest }
+  | { type: 'safe'; data: SafeTraceRequest };
 
 
 // 执行失败的类型
@@ -164,7 +164,7 @@ export type ExecutionStatus =
     }
   | {
       Failed: {
-        kind: FailureKind;
+        types: string;
         gas_used: number;
         output?: string | null;
       }
@@ -234,21 +234,17 @@ export interface FormattedTransaction {
   function_call?: FunctionCall | null;
 }
 
-// 追踪结果
-export interface TraceResult {
-  asset_transfers: TokenTransfer[];
-  token_infos: Record<string, TokenInfo>;
-  call_traces: CallTrace[];
-  logs: Log[];
-  status: ExecutionStatus;
-}
 
   // 追踪信息
   export interface TraceInfo {
     block_number: number;
-    trace_result: TraceResult;
-    execution_status: TransactionStatus;  // 执行状态,包含成功,部分成功,失败,是人为的一个总结
+    token_infos?: Record<string, TokenInfo> | null;
+    asset_transfers: TokenTransfer[];
+    call_traces: CallTrace[];
+    logs: Log[];
+    status: ExecutionStatus;  // 执行状态,包含成功,失败,自定义结构
     error_trace_address?: number[] | null;
+    error_message?:string
   }
   
 // 统一的追踪响应类型

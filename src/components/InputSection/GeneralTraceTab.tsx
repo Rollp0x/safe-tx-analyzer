@@ -8,9 +8,9 @@ import {
   Stack,
   CircularProgress
 } from '@mui/material';
-import { ChainInfo } from '../../types';
-import { useTrace } from '../../providers/TraceContext';
-import { useSnackbar } from '../../providers/SnackbarContext';
+import { ChainInfo } from '@/types';
+import { useTrace } from '@/providers/TraceContext';
+import { useSnackbar } from '@/providers/SnackbarContext';
 
 function GeneralTraceTab({ chains }: { chains: ChainInfo[] }) {
   const { trace } = useTrace();

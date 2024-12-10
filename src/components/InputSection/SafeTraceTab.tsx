@@ -6,8 +6,8 @@ import {
   Typography,
   CircularProgress,
 } from '@mui/material';
-import { useTrace } from '../../providers/TraceContext';
-import { useSnackbar } from '../../providers/SnackbarContext';
+import { useTrace } from '@/providers/TraceContext';
+import { useSnackbar } from '@/providers/SnackbarContext';
 
 function SafeTraceTab() {
   const { trace } = useTrace();
