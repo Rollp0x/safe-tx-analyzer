@@ -237,7 +237,7 @@ export interface FormattedTransaction {
     logs: Log[];
     status: ExecutionStatus;  // 执行状态,包含成功,失败,自定义结构
     error_trace_address?: number[] | null;
-    error_message?:string
+    error_message?:string | null;
   }
   
 // 统一的追踪响应类型

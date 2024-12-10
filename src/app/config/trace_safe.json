@@ -1,0 +1,465 @@
+{
+    "code": 200,
+    "data": {
+        "safe_info": {
+            "safe_address": "0x91738Af41eC597AC19341D00371E3605ef7B6db4",
+            "tx_id": "0x496bb4cdc1b53c1d60ddbed3cd5cd54e0ffd01345d30fcce54d4bae6871cc202",
+            "tx_hash": "0x3703b6957dcf4dacb0ca74057463d6fee44dd0d70c1b711aa77c910e9b41c665",
+            "nonce": 24,
+            "value": "0.000000000000000000",
+            "proposer": "0x38a34D935C66706FE3610ce2c43C3756Fda71FF8",
+            "executor": "0x62A79bCeDCf314270C8f1e2e92fdDb725dE56823",
+            "status": "SUCCESS",
+            "signers": [
+                "0x3b47b6a52e2C5bd4ca23eF7295Af7c435E63FC92",
+                "0x38a34D935C66706FE3610ce2c43C3756Fda71FF8",
+                "0x078Bb71a6ad43883ECE9A4dB3d5EDcAF789A7EC8",
+                "0x62A79bCeDCf314270C8f1e2e92fdDb725dE56823"
+            ],
+            "confirmations_required": 3,
+            "confirmations": [
+                {
+                    "signer": "0x38a34D935C66706FE3610ce2c43C3756Fda71FF8",
+                    "signature": "0xff7eb0e8b21c43903eddc07e5b18d82feaf4eeb1f4d6a3c9f7ddf0a9ebd54cf92c4b71286af4707151802a76eb35c21f6d739ee70b80a4e929bf1d8cc75f34ab1b"
+                },
+                {
+                    "signer": "0x078Bb71a6ad43883ECE9A4dB3d5EDcAF789A7EC8",
+                    "signature": "0xa07d33ff044052cdc5f30adac51c48a9fb3790ed995cf8414799ffd07e6668e76b42b9b5842b32dafcd52e8b78edef2709456b9751fb279aada83d290e21fa631c"
+                },
+                {
+                    "signer": "0x62A79bCeDCf314270C8f1e2e92fdDb725dE56823",
+                    "signature": "0x00000000000000000000000062a79bcedcf314270c8f1e2e92fddb725de56823000000000000000000000000000000000000000000000000000000000000000001"
+                }
+            ],
+            "block_number": 6980466,
+            "safe_tx": {
+                "to": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                "value": "0x0",
+                "data": "0x617ba037000000000000000000000000ff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f000000000000000000000000000000000000000000000000019973cef01aeeb700000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db40000000000000000000000000000000000000000000000000000000000000000",
+                "operation": 0,
+                "safeTxGas": "0x0",
+                "baseGas": "0x0",
+                "gasPrice": "0x0",
+                "gasToken": "0x0000000000000000000000000000000000000000",
+                "refundReceiver": "0x0000000000000000000000000000000000000000",
+                "nonce": "0x18"
+            }
+        },
+        "trace_info": {
+            "block_number": 6980466,
+            "asset_transfers": [
+                {
+                    "token": "0xff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f",
+                    "from": "0x91738af41ec597ac19341d00371e3605ef7b6db4",
+                    "to": "0xa984b70f7b41ee736b487d5f3d9c1e1026476ea3",
+                    "value": "0x19973cef01aeeb7"
+                },
+                {
+                    "token": "0xa984b70f7b41ee736b487d5f3d9c1e1026476ea3",
+                    "from": "0x0000000000000000000000000000000000000000",
+                    "to": "0x91738af41ec597ac19341d00371e3605ef7b6db4",
+                    "value": "0x2525a5db56feb13"
+                }
+            ],
+            "token_infos": {
+                "0xa984b70f7b41ee736b487d5f3d9c1e1026476ea3": {
+                    "symbol": "aBitWBTC",
+                    "decimals": 18
+                },
+                "0x0000000000000000000000000000000000000000": {
+                    "symbol": "BTC",
+                    "decimals": 18
+                },
+                "0xff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f": {
+                    "symbol": "WBTC",
+                    "decimals": 18
+                }
+            },
+            "call_traces": [
+                {
+                    "from": "0x91738af41ec597ac19341d00371e3605ef7b6db4",
+                    "to": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                    "value": "0x0",
+                    "input": "0x617ba037000000000000000000000000ff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f000000000000000000000000000000000000000000000000019973cef01aeeb700000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db40000000000000000000000000000000000000000000000000000000000000000",
+                    "call_scheme": "Call",
+                    "create_scheme": null,
+                    "gas_used": "0x22b7d",
+                    "output": "0x",
+                    "status": "Success",
+                    "error_origin": false,
+                    "subtraces": [
+                        {
+                            "from": "0x91738af41ec597ac19341d00371e3605ef7b6db4",
+                            "to": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                            "value": "0x0",
+                            "input": "0x617ba037000000000000000000000000ff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f000000000000000000000000000000000000000000000000019973cef01aeeb700000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db40000000000000000000000000000000000000000000000000000000000000000",
+                            "call_scheme": "DelegateCall",
+                            "create_scheme": null,
+                            "gas_used": "0x217b5",
+                            "output": "0x",
+                            "status": "Success",
+                            "error_origin": false,
+                            "subtraces": [
+                                {
+                                    "from": "0x91738af41ec597ac19341d00371e3605ef7b6db4",
+                                    "to": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                                    "value": "0x0",
+                                    "input": "0x1913f1610000000000000000000000000000000000000000000000000000000000000034000000000000000000000000000000000000000000000000000000000000003630b053f18c010a98b59e54277bb3ee404ade0412c0e369f969e65da13af7dcf4000000000000000000000000ff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f000000000000000000000000000000000000000000000000019973cef01aeeb700000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db40000000000000000000000000000000000000000000000000000000000000000",
+                                    "call_scheme": "DelegateCall",
+                                    "create_scheme": null,
+                                    "gas_used": "0x20911",
+                                    "output": "0x",
+                                    "status": "Success",
+                                    "error_origin": false,
+                                    "subtraces": [
+                                        {
+                                            "from": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                                            "to": "0xc7d82b035ca1a8aefc1c7a077aeeffbbac27e3bb",
+                                            "value": "0x0",
+                                            "input": "0xb1bf962d",
+                                            "call_scheme": "StaticCall",
+                                            "create_scheme": null,
+                                            "gas_used": "0x1d2c",
+                                            "output": "0x00000000000000000000000000000000000000000000002252186326447ab7b2",
+                                            "status": "Success",
+                                            "error_origin": false,
+                                            "subtraces": [
+                                                {
+                                                    "from": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                                                    "to": "0xc7d82b035ca1a8aefc1c7a077aeeffbbac27e3bb",
+                                                    "value": "0x0",
+                                                    "input": "0xb1bf962d",
+                                                    "call_scheme": "DelegateCall",
+                                                    "create_scheme": null,
+                                                    "gas_used": "0x973",
+                                                    "output": "0x00000000000000000000000000000000000000000000002252186326447ab7b2",
+                                                    "status": "Success",
+                                                    "error_origin": false,
+                                                    "subtraces": [],
+                                                    "trace_address": [
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0
+                                                    ]
+                                                }
+                                            ],
+                                            "trace_address": [
+                                                0,
+                                                0,
+                                                0,
+                                                0
+                                            ]
+                                        },
+                                        {
+                                            "from": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                                            "to": "0xfbf7754a9e38bbbfe1cb746419f3e8f0bf3ba79d",
+                                            "value": "0x0",
+                                            "input": "0x79774338",
+                                            "call_scheme": "StaticCall",
+                                            "create_scheme": null,
+                                            "gas_used": "0x26fe",
+                                            "output": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                                            "status": "Success",
+                                            "error_origin": false,
+                                            "subtraces": [
+                                                {
+                                                    "from": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                                                    "to": "0xfbf7754a9e38bbbfe1cb746419f3e8f0bf3ba79d",
+                                                    "value": "0x0",
+                                                    "input": "0x79774338",
+                                                    "call_scheme": "DelegateCall",
+                                                    "create_scheme": null,
+                                                    "gas_used": "0x1339",
+                                                    "output": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                                                    "status": "Success",
+                                                    "error_origin": false,
+                                                    "subtraces": [],
+                                                    "trace_address": [
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        1,
+                                                        0
+                                                    ]
+                                                }
+                                            ],
+                                            "trace_address": [
+                                                0,
+                                                0,
+                                                0,
+                                                1
+                                            ]
+                                        },
+                                        {
+                                            "from": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                                            "to": "0x8f4ef47024ab5d69da873aa94498e18555cfb4b4",
+                                            "value": "0x0",
+                                            "input": "0xa58987090000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000019973cef01aeeb700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022a598535544df256e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001388000000000000000000000000ff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f000000000000000000000000a984b70f7b41ee736b487d5f3d9c1e1026476ea3",
+                                            "call_scheme": "StaticCall",
+                                            "create_scheme": null,
+                                            "gas_used": "0x2544",
+                                            "output": "0x00000000000000000000000000000000000000000000ae8e21def333abfdeb120000000000000000000000000000000000000000003908598fc2a87574988eb500000000000000000000000000000000000000000006b79dc5288e976ed3aae0",
+                                            "status": "Success",
+                                            "error_origin": false,
+                                            "subtraces": [
+                                                {
+                                                    "from": "0x8f4ef47024ab5d69da873aa94498e18555cfb4b4",
+                                                    "to": "0xff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f",
+                                                    "value": "0x0",
+                                                    "input": "0x70a08231000000000000000000000000a984b70f7b41ee736b487d5f3d9c1e1026476ea3",
+                                                    "call_scheme": "StaticCall",
+                                                    "create_scheme": null,
+                                                    "gas_used": "0x9ed",
+                                                    "output": "0x00000000000000000000000000000000000000000000008801d98ae3aa6ff1a9",
+                                                    "status": "Success",
+                                                    "error_origin": false,
+                                                    "subtraces": [],
+                                                    "trace_address": [
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        2,
+                                                        0
+                                                    ]
+                                                }
+                                            ],
+                                            "trace_address": [
+                                                0,
+                                                0,
+                                                0,
+                                                2
+                                            ]
+                                        },
+                                        {
+                                            "from": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                                            "to": "0xff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f",
+                                            "value": "0x0",
+                                            "input": "0x23b872dd00000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db4000000000000000000000000a984b70f7b41ee736b487d5f3d9c1e1026476ea3000000000000000000000000000000000000000000000000019973cef01aeeb7",
+                                            "call_scheme": "Call",
+                                            "create_scheme": null,
+                                            "gas_used": "0x3438",
+                                            "output": "0x0000000000000000000000000000000000000000000000000000000000000001",
+                                            "status": "Success",
+                                            "error_origin": false,
+                                            "subtraces": [],
+                                            "trace_address": [
+                                                0,
+                                                0,
+                                                0,
+                                                3
+                                            ]
+                                        },
+                                        {
+                                            "from": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                                            "to": "0xa984b70f7b41ee736b487d5f3d9c1e1026476ea3",
+                                            "value": "0x0",
+                                            "input": "0xb3f1c93d00000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db400000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db4000000000000000000000000000000000000000000000000019973cef01aeeb70000000000000000000000000000000000000000033cf5795654659bb9728a63",
+                                            "call_scheme": "Call",
+                                            "create_scheme": null,
+                                            "gas_used": "0x86b2",
+                                            "output": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                                            "status": "Success",
+                                            "error_origin": false,
+                                            "subtraces": [
+                                                {
+                                                    "from": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                                                    "to": "0xa984b70f7b41ee736b487d5f3d9c1e1026476ea3",
+                                                    "value": "0x0",
+                                                    "input": "0xb3f1c93d00000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db400000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db4000000000000000000000000000000000000000000000000019973cef01aeeb70000000000000000000000000000000000000000033cf5795654659bb9728a63",
+                                                    "call_scheme": "DelegateCall",
+                                                    "create_scheme": null,
+                                                    "gas_used": "0x72e7",
+                                                    "output": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                                                    "status": "Success",
+                                                    "error_origin": false,
+                                                    "subtraces": [
+                                                        {
+                                                            "from": "0xa984b70f7b41ee736b487d5f3d9c1e1026476ea3",
+                                                            "to": "0xe7eefc5a9ba0064a8434208f5b1b5aee9df34f96",
+                                                            "value": "0x0",
+                                                            "input": "0x31873e2e00000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db40000000000000000000000000000000000000000000000a9ed42661b7daff4a000000000000000000000000000000000000000000000007325d5cbd092037754",
+                                                            "call_scheme": "Call",
+                                                            "create_scheme": null,
+                                                            "gas_used": "0x1e15",
+                                                            "output": "0x",
+                                                            "status": "Success",
+                                                            "error_origin": false,
+                                                            "subtraces": [
+                                                                {
+                                                                    "from": "0xa984b70f7b41ee736b487d5f3d9c1e1026476ea3",
+                                                                    "to": "0xe7eefc5a9ba0064a8434208f5b1b5aee9df34f96",
+                                                                    "value": "0x0",
+                                                                    "input": "0x31873e2e00000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db40000000000000000000000000000000000000000000000a9ed42661b7daff4a000000000000000000000000000000000000000000000007325d5cbd092037754",
+                                                                    "call_scheme": "DelegateCall",
+                                                                    "create_scheme": null,
+                                                                    "gas_used": "0xa73",
+                                                                    "output": "0x",
+                                                                    "status": "Success",
+                                                                    "error_origin": false,
+                                                                    "subtraces": [],
+                                                                    "trace_address": [
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        4,
+                                                                        0,
+                                                                        0,
+                                                                        0
+                                                                    ]
+                                                                }
+                                                            ],
+                                                            "trace_address": [
+                                                                0,
+                                                                0,
+                                                                0,
+                                                                4,
+                                                                0,
+                                                                0
+                                                            ]
+                                                        }
+                                                    ],
+                                                    "trace_address": [
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        4,
+                                                        0
+                                                    ]
+                                                }
+                                            ],
+                                            "trace_address": [
+                                                0,
+                                                0,
+                                                0,
+                                                4
+                                            ]
+                                        }
+                                    ],
+                                    "trace_address": [
+                                        0,
+                                        0,
+                                        0
+                                    ]
+                                }
+                            ],
+                            "trace_address": [
+                                0,
+                                0
+                            ]
+                        }
+                    ],
+                    "trace_address": [
+                        0
+                    ]
+                }
+            ],
+            "logs": [
+                {
+                    "address": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                    "topics": [
+                        "0x804c9b842b2748a22bb64b345453a3de7ca54a6ca45ce00d415894979e22897a",
+                        "0x000000000000000000000000ff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f"
+                    ],
+                    "data": "0x00000000000000000000000000000000000000000000ae8e21def333abfdeb120000000000000000000000000000000000000000003908598fc2a87574988eb500000000000000000000000000000000000000000006b79dc5288e976ed3aae00000000000000000000000000000000000000000033cf5795654659bb9728a63000000000000000000000000000000000000000003430ab531651c9e348359b3"
+                },
+                {
+                    "address": "0xff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f",
+                    "topics": [
+                        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+                        "0x00000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db4",
+                        "0x000000000000000000000000a984b70f7b41ee736b487d5f3d9c1e1026476ea3"
+                    ],
+                    "data": "0x000000000000000000000000000000000000000000000000019973cef01aeeb7"
+                },
+                {
+                    "address": "0xa984b70f7b41ee736b487d5f3d9c1e1026476ea3",
+                    "topics": [
+                        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+                        "0x0000000000000000000000000000000000000000000000000000000000000000",
+                        "0x00000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db4"
+                    ],
+                    "data": "0x00000000000000000000000000000000000000000000000002525a5db56feb13"
+                },
+                {
+                    "address": "0xa984b70f7b41ee736b487d5f3d9c1e1026476ea3",
+                    "topics": [
+                        "0x458f5fa412d0f69b08dd84872b0215675cc67bc1d5b6fd93300a1c3878b86196",
+                        "0x00000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db4",
+                        "0x00000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db4"
+                    ],
+                    "data": "0x00000000000000000000000000000000000000000000000002525a5db56feb1300000000000000000000000000000000000000000000000000b8e68ec554fc5c0000000000000000000000000000000000000000033cf5795654659bb9728a63"
+                },
+                {
+                    "address": "0xea5c99a3cca5f95ef6870a1b989755f67b6b1939",
+                    "topics": [
+                        "0x2b627736bca15cd5381dcf80b0bf11fd197d01a037c52b927a881a10fb73ba61",
+                        "0x000000000000000000000000ff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f",
+                        "0x00000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db4",
+                        "0x0000000000000000000000000000000000000000000000000000000000000000"
+                    ],
+                    "data": "0x00000000000000000000000091738af41ec597ac19341d00371e3605ef7b6db4000000000000000000000000000000000000000000000000019973cef01aeeb7"
+                }
+            ],
+            "status": {
+                "Success": {
+                    "gas_used": 159545,
+                    "gas_refunded": 4800,
+                    "output": {
+                        "Call": "0x"
+                    }
+                }
+            },
+            "error_trace_address": null,
+            "error_message": null
+        },
+        "decoded_info": [
+            {
+                "basic_info": {
+                    "from": "0x91738Af41eC597AC19341D00371E3605ef7B6db4",
+                    "to": "0xEA5c99A3cca5f95Ef6870A1B989755f67B6B1939",
+                    "value": "0 BTC",
+                    "symbol": "BTC"
+                },
+                "transaction_info": {
+                    "type": "ContractCall",
+                    "content": {
+                        "contract_address": "0xEA5c99A3cca5f95Ef6870A1B989755f67B6B1939",
+                        "contract_name": null,
+                        "is_self_call": false
+                    }
+                },
+                "function_call": {
+                    "name": "supply",
+                    "parameters": [
+                        {
+                            "name": "param_1",
+                            "description": "",
+                            "display_value": "0xfF204e2681A6fA0e2C3FaDe68a1B28fb90E4Fc5F",
+                            "param_type": "Address(0xff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f)"
+                        },
+                        {
+                            "name": "param_2",
+                            "description": "",
+                            "display_value": "115250598103412407(raw)",
+                            "param_type": "Uint(115250598103412407, 256)"
+                        },
+                        {
+                            "name": "param_3",
+                            "description": "",
+                            "display_value": "0x91738Af41eC597AC19341D00371E3605ef7B6db4",
+                            "param_type": "Address(0x91738af41ec597ac19341d00371e3605ef7b6db4)"
+                        },
+                        {
+                            "name": "param_4",
+                            "description": "",
+                            "display_value": "0(raw)",
+                            "param_type": "Uint(0, 16)"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

@@ -122,7 +122,7 @@ function TraceItem({ trace, index, level, expandedPath, resetCounter, onReset, i
     
     return result;
   };
-  let is_error = trace.status !== 'Success' && trace.status !== 'InProgress';
+  const is_error = trace.status !== 'Success' && trace.status !== 'InProgress';
   return (
     <Box 
       ref={itemRef}
