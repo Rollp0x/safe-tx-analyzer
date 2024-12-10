@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL_INTERNAL
 
 const instance = axios.create({
   baseURL: API_BASE_URL,
@@ -11,9 +11,7 @@ const instance = axios.create({
 
 instance.interceptors.response.use(
   response => response.data,
-  error => {
-    throw new Error(error.response?.data?.message || error.message || 'Request failed');
-  }
+  error => Promise.reject(error)
 );
 
 export default instance; 
