@@ -1,6 +1,6 @@
 
 import { Paper, Box, Stack } from '@mui/material';
-
+import { useMemo } from 'react';
 import BasicInfo from './BasicInfo';
 import BalanceChangesWithTable from './BalanceChangesWithTable';
 import FlowGraph from './FlowGraph';
@@ -12,37 +12,42 @@ function SimulationSection({ chains }: { chains: ChainInfo[] }) {
   
   const { result, currentChainId } = useTrace();
 
-  const chainInfo = chains.find(chain => chain.chain_id === currentChainId);
-  if (!result?.trace_info || !chainInfo) {
-    return null;
-  }
+  // 使用 useMemo 缓存处理后的数据
+  const processedTraceResult = useMemo(() => {
+    const chainInfo = chains.find(chain => chain.chain_id === currentChainId);
+    if (!result?.trace_info || !chainInfo) {
+      return null;
+    }
 
-  // 直接处理数据
-  let processedTraceResult: TraceInfo;
-  try {
-    const processedTokenInfo = Object.entries(result?.trace_info?.token_infos ?? {}).reduce(
-      (acc, [address, info]) => ({
-        ...acc,
-        [address.toLowerCase()]: info
-      }),
-      {} as Record<string, TokenInfo>
-    );
-    
-    const processedTransfers = processTokenTransfers(result.trace_info, chainInfo)
-      .asset_transfers.map((transfer: TokenTransfer) => ({
-        ...transfer,
-        token: transfer.token.toLowerCase(),
-        from: transfer.from.toLowerCase(),
-        to: transfer.to?.toLowerCase() || "合约创建失败",
-      }));
+    try {
+      const processedTokenInfo = Object.entries(result.trace_info.token_infos ?? {}).reduce(
+        (acc, [address, info]) => ({
+          ...acc,
+          [address.toLowerCase()]: info
+        }),
+        {} as Record<string, TokenInfo>
+      );
+      
+      const processedTransfers = processTokenTransfers(result.trace_info, chainInfo)
+        .asset_transfers.map((transfer: TokenTransfer) => ({
+          ...transfer,
+          token: transfer.token.toLowerCase(),
+          from: transfer.from.toLowerCase(),
+          to: transfer.to?.toLowerCase() || "合约创建失败",
+        }));
 
-    processedTraceResult = {
-      ...result?.trace_info,
-      token_infos: processedTokenInfo,
-      asset_transfers: processedTransfers,
-    };
-  } catch (error) {
-    console.error('Error processing trace result:', error);
+      return {
+        ...result.trace_info,
+        token_infos: processedTokenInfo,
+        asset_transfers: processedTransfers,
+      };
+    } catch (error) {
+      console.error('Error processing trace result:', error);
+      return null;
+    }
+  }, [result?.trace_info, currentChainId, chains]); // 只有这些依赖项变化时才重新计算
+
+  if (!processedTraceResult) {
     return null;
   }
 

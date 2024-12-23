@@ -5,8 +5,10 @@ import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import { processGraphData } from '@/utils/graph';
 import { useSnackbar } from '@/providers/SnackbarContext';
 import { TokenInfo, TraceInfo } from '@/types';
+import React from 'react';
 
-function FlowGraph({ traceResult }: { traceResult: TraceInfo}) {
+
+const FlowGraph = React.memo(({ traceResult }: { traceResult: TraceInfo}) => {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const fullscreenContainerRef = useRef<HTMLDivElement>(null);
@@ -252,6 +254,9 @@ function FlowGraph({ traceResult }: { traceResult: TraceInfo}) {
             )}
         </Box>
     );
-}
+}, (prev, next) => {
+    const isEqual = JSON.stringify(prev.traceResult) === JSON.stringify(next.traceResult);
+    return isEqual;
+});
 
 export default FlowGraph;
