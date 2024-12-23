@@ -36,6 +36,12 @@ jobs:
       - name: Build
         run: pnpm build
 
+      # 添加这个步骤来创建 .nojekyll 文件
+      - name: Create .nojekyll file
+        run: |
+          mkdir -p build/out
+          touch build/out/.nojekyll
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
