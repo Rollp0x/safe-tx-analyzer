@@ -37,7 +37,7 @@ export function TraceProvider({ children }: { children: React.ReactNode }) {
 
   const proposeSafeTx = async (safeAddress: string, signedSafeTx: SignedSafeTx) => {
     const response = await api.proposeSafeTx(safeAddress, signedSafeTx);
-    return response.data;
+    return response;
   };
 
   return (
