@@ -8,7 +8,7 @@ export const api = {
 
   // Safe交易追踪
   traceSafe: (request: SafeTraceRequest) =>
-    instance.post<TraceResponse>('/api/decode/external/trace/safe', request),
+    instance.post<TraceResponse>('/api/decode/external/auth/trace/safe', request),
   
   // Safe 交易提交
   proposeSafeTx: (safeAddress: string, signedTx: SignedSafeTx) => 
