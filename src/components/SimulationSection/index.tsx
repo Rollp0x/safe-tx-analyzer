@@ -1,6 +1,6 @@
 
 import { Paper, Box, Stack } from '@mui/material';
-
+import { useMemo } from 'react';
 import BasicInfo from './BasicInfo';
 import BalanceChangesWithTable from './BalanceChangesWithTable';
 import FlowGraph from './FlowGraph';
@@ -13,38 +13,43 @@ import chain_infos from '@/config/chain_infos.json'
 function SimulationSection() {
   
   const { result } = useTrace();
+  const currentChainId = 200901;
+  // 使用 useMemo 缓存处理后的数据
+  const processedTraceResult = useMemo(() => {
+    const chainInfo = chain_infos.chains.find(chain => chain.chain_id === currentChainId);
+    if (!result?.trace_info || !chainInfo) {
+      return null;
+    }
 
-  const chainInfo = chain_infos.chains.find(chain => chain.chain_id === 200901);
-  if (!result?.trace_info || !chainInfo) {
-    return null;
-  }
+    try {
+      const processedTokenInfo = Object.entries(result.trace_info.token_infos ?? {}).reduce(
+        (acc, [address, info]) => ({
+          ...acc,
+          [address.toLowerCase()]: info
+        }),
+        {} as Record<string, TokenInfo>
+      );
+      
+      const processedTransfers = processTokenTransfers(result.trace_info, chainInfo)
+        .asset_transfers.map((transfer: TokenTransfer) => ({
+          ...transfer,
+          token: transfer.token.toLowerCase(),
+          from: transfer.from.toLowerCase(),
+          to: transfer.to?.toLowerCase() || "合约创建失败",
+        }));
 
-  // 直接处理数据
-  let processedTraceResult: TraceInfo;
-  try {
-    const processedTokenInfo = Object.entries(result?.trace_info?.token_infos ?? {}).reduce(
-      (acc, [address, info]) => ({
-        ...acc,
-        [address.toLowerCase()]: info
-      }),
-      {} as Record<string, TokenInfo>
-    );
-    
-    const processedTransfers = processTokenTransfers(result.trace_info, chainInfo)
-      .asset_transfers.map((transfer: TokenTransfer) => ({
-        ...transfer,
-        token: transfer.token.toLowerCase(),
-        from: transfer.from.toLowerCase(),
-        to: transfer.to?.toLowerCase() || "合约创建失败",
-      }));
+      return {
+        ...result.trace_info,
+        token_infos: processedTokenInfo,
+        asset_transfers: processedTransfers,
+      };
+    } catch (error) {
+      console.error('Error processing trace result:', error);
+      return null;
+    }
+  }, [result?.trace_info, currentChainId, chain_infos]); // 只有这些依赖项变化时才重新计算
 
-    processedTraceResult = {
-      ...result?.trace_info,
-      token_infos: processedTokenInfo,
-      asset_transfers: processedTransfers,
-    };
-  } catch (error) {
-    console.error('Error processing trace result:', error);
+  if (!processedTraceResult) {
     return null;
   }
 
@@ -73,7 +78,7 @@ function SimulationSection() {
         {/* 新增日志列表 */}
         <Paper elevation={2}>
           <Box sx={{ p: 3 }}>
-            <LogsTable logs={result.trace_info.logs || []} />
+            <LogsTable logs={processedTraceResult.logs || []} />
           </Box>
         </Paper>
       </Stack>
