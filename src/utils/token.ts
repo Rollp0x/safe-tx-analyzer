@@ -8,41 +8,41 @@ export function processTokenTransfers(traceResult: TraceInfo, chainInfo: ChainIn
     
     // 预先处理 chain_info 中的地址为小写
     const wrapTokenAddress = chainInfo.wrap_token?.toLowerCase();
-    
-    // 从后向前遍历，方便插入新的记录
-    for (let i = processedTransfers.length - 1; i >= 0; i--) {
-        const transfer = processedTransfers[i];
-        
-        // 检查是否是向 wrap token 转移原生代币
-        if (
-            transfer.token === ZERO_ADDRESS && 
-            wrapTokenAddress && 
-            transfer.to === wrapTokenAddress  // 不需要再转换小写了
-        ) {
-            // 创建对应的 wrapped token 转移记录
-            const wrappedTokenTransfer: TokenTransfer = {
-                token: wrapTokenAddress,  // 已经是小写了
-                from: wrapTokenAddress,   // 已经是小写了
-                to: transfer.from,        // transfer.from 已经是小写的
+    let newTransfers: TokenTransfer[] = [];
+    // 正向遍历，根据业务逻辑决定 push 顺序
+    for (const transfer of processedTransfers)  {
+        // 如果是销毁wrapToken，则直接插入到前面
+        if (transfer.token === ZERO_ADDRESS && wrapTokenAddress && transfer.from === wrapTokenAddress) {
+            newTransfers.push({
+                token:wrapTokenAddress,
+                from: transfer.to as string,
+                to: ZERO_ADDRESS,
                 value: transfer.value
-            };
-            
-            // 在当前位置后插入新记录
-            processedTransfers.splice(i + 1, 0, wrappedTokenTransfer);
-            
-            // 如果 token_info 中没有 wrap token 的信息，添加它
-            if (!tokenInfos[wrapTokenAddress] && chainInfo.wrap_token_symbol) {
-                tokenInfos[wrapTokenAddress] = {
-                    symbol: chainInfo.wrap_token_symbol,
-                    decimals: chainInfo.decimals
-                };
-            }
+            });
         }
+        newTransfers.push(transfer);
+        // 如果是铸造wrapToken，则直接插入到后面
+        if (transfer.token === ZERO_ADDRESS && wrapTokenAddress && transfer.to === wrapTokenAddress) {
+            newTransfers.push({
+                token:wrapTokenAddress,
+                from: ZERO_ADDRESS,
+                to: transfer.from,
+                value: transfer.value
+            });
+        }
+    }
+    // 如果 token_info 中没有 wrap token 的信息，添加它
+    // 不管是否涉及到wrap token
+    if (!tokenInfos[wrapTokenAddress] && chainInfo.wrap_token_symbol) {
+        tokenInfos[wrapTokenAddress] = {
+            symbol: chainInfo.wrap_token_symbol,
+            decimals: chainInfo.decimals
+        };
     }
     
     return {
         ...traceResult,
-        asset_transfers: processedTransfers,
+        asset_transfers: newTransfers,
         token_infos: tokenInfos
     };
 }

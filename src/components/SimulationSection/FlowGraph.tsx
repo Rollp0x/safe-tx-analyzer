@@ -6,6 +6,7 @@ import { processGraphData } from '@/utils/graph';
 import { useSnackbar } from '@/providers/SnackbarContext';
 import { TokenInfo, TraceInfo } from '@/types';
 import React from 'react';
+import { getCachedLabels } from '@/utils/addressLabels';
 
 
 const FlowGraph = React.memo(({ traceResult }: { traceResult: TraceInfo}) => {
@@ -15,12 +16,18 @@ const FlowGraph = React.memo(({ traceResult }: { traceResult: TraceInfo}) => {
     const graphRef = useRef<Graph | null>(null);
     const fullscreenGraphRef = useRef<Graph | null>(null);
     const { showSuccess, showError } = useSnackbar();
+    let labels = getCachedLabels();
 
     // 添加一个处理地址显示的函数
     const formatAddress = (address: string) => {
         if (!address) return '';
-        if (address.length <= 10) return address;
-        return `${address.slice(0, 6)}...${address.slice(-4)}`;
+        let label = labels[address];
+        if (!label) {
+            if (address.length <= 10) return address;
+            return `${address.slice(0, 6)}...${address.slice(-4)}`;
+        } else {
+            return `${address.slice(0, 6)}...${address.slice(-4)} (${label})`
+        }
     };
 
     // 创建图表的函数
