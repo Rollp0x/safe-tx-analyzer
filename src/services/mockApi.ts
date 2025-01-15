@@ -1,9 +1,6 @@
 import safeTrace from '@/config/trace_safe.json';
-import chainInfos from '@/config/chain_infos.json'
 import { 
-  ChainInfo, 
-  TraceResponse, 
-  TraceRequest, 
+  TraceResponse,
   SafeTraceRequest, 
   ApiResponse, 
   SignedSafeTx

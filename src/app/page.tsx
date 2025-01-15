@@ -1,6 +1,6 @@
 'use client'
 import '@rainbow-me/rainbowkit/styles.css';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { 
   Box, 
@@ -144,13 +144,21 @@ function LoginForm() {
 
 export default function Home() {
   const { token } = useAuth()
+  const [mounted, setMounted] = useState(false)
 
-  // 如果没有 token，显示登录表单
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // 在客户端渲染之前返回一个加载状态或空内容
+  if (!mounted) {
+    return null // 或者返回一个加载指示器
+  }
+
   if (!token) {
     return <LoginForm />
   }
 
-  // 有 token，显示主页内容
   return (
     <>
       <CustomAppBar />
