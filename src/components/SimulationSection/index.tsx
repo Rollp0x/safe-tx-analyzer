@@ -22,25 +22,27 @@ function SimulationSection() {
     }
 
     try {
-      const processedTokenInfo = Object.entries(result.trace_info.token_infos ?? {}).reduce(
-        (acc, [address, info]) => ({
-          ...acc,
-          [address.toLowerCase()]: info
-        }),
-        {} as Record<string, TokenInfo>
-      );
+      // const processedTokenInfo = Object.entries(result.trace_info.token_infos ?? {}).reduce(
+      //   (acc, [address, info]) => ({
+      //     ...acc,
+      //     [address.toLowerCase()]: info
+      //   }),
+      //   {} as Record<string, TokenInfo>
+      // );
+      const {
+        asset_transfers,
+        token_infos
+      } = processTokenTransfers(result.trace_info, chainInfo)
       
-      const processedTransfers = processTokenTransfers(result.trace_info, chainInfo)
-        .asset_transfers.map((transfer: TokenTransfer) => ({
+      const processedTransfers = asset_transfers.map((transfer: TokenTransfer) => ({
           ...transfer,
           token: transfer.token.toLowerCase(),
           from: transfer.from.toLowerCase(),
           to: transfer.to?.toLowerCase() || "合约创建失败",
         }));
-
       return {
         ...result.trace_info,
-        token_infos: processedTokenInfo,
+        token_infos,
         asset_transfers: processedTransfers,
       };
     } catch (error) {
