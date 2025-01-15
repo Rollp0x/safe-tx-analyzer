@@ -22,3 +22,5 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ## 注意:
 这是对外版本,也就是只有Safe钱包通过url来核验并模拟,不支持任意交易模拟。同时提供了登录功能,需要在后台对请求api进行限制。
+
+现在外部版本的git 分支是main了，不是external,注意
