@@ -1,0 +1,1 @@
+rsync -avz -e ssh build.zip ubuntu@101.36.127.66:analysis
